@@ -7,8 +7,8 @@ on:
 
 jobs:
   branch-name-check:
+    name: Verify Branch Name
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
         uses: actions/checkout@v2
