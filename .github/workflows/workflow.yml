@@ -21,17 +21,24 @@ jobs:
         run: |
           branch_name="${{ steps.branch.outputs.current_branch }}"
           echo "${{ steps.branch.outputs.current_branch }}"
-          regex_pattern='^[a-z]+\/[A-Z]+-[0-9]+_[a-z]+(_[a-z]+)*$'
+          regex_pattern='^[a-z]+\/[a-z]+-[0-9]+_[a-z]+(_[a-z]+)*$'
           if ! [[ "$branch_name" =~ $regex_pattern ]]; then
             echo "Invalid branch name: $branch_name"
+            exit 1
+          fi
+
+          if [[ ${#branch_name} -gt 50 ]]; then
+            echo "Branch name exceeds 50 characters: $branch_name"
             exit 1
           fi
 
 # Regex pattern:
 #       Starts with one or more lowercase letters.
 #       Followed by a forward slash ("/").
-#       Followed by one or more uppercase letters.
+#       Followed by one or more lower case letters.
 #       Followed by a hyphen ("-") and one or more digits.
 #       Followed by an underscore and one or more lowercase letters.
 #       Optionally followed by zero or more occurrences of an underscore and one or more lowercase letters.
+
 # ..
+
